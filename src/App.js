@@ -48,9 +48,9 @@ const App = () => {
                   <Book
                     key={book.id}
                     id={book.id}
-                    imageUrl={book.imageLinks.smallThumbnail}
+                    imageUrl={book.imageLinks?book.imageLinks.smallThumbnail:``}
                     title={book.title}
-                    auth={book.authors}
+                    auth={book.authors?book.authors:``}
                     option="currentlyReading"
                   />
                 );
@@ -61,9 +61,9 @@ const App = () => {
                 return (
                   <Book
                     key={book.id}
-                    imageUrl={book.imageLinks.smallThumbnail}
+                    imageUrl={book.imageLinks?book.imageLinks.smallThumbnail:``}
                     title={book.title}
-                    auth={book.authors}
+                    auth={book.authors?book.authors:``}
                     option="read"
                     id={book.id}
 
@@ -78,9 +78,9 @@ const App = () => {
                                   id={book.id}
 
                     key={book.id}
-                    imageUrl={book.imageLinks.smallThumbnail}
+                    imageUrl={book.imageLinks?book.imageLinks.smallThumbnail:``}
                     title={book.title}
-                    auth={book.authors}
+                    auth={book.authors?book.authors:``}
                     option="wantToRead"
                   ></Book>
                 );
