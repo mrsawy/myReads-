@@ -5,6 +5,7 @@ const BookshelfManager = (props) => {
     const changeOptionHandler =(e)=>{
         const newOption  = e.target.value ;
         setOption(newOption) ;
+        console.log(newOption)
         props.change(newOption);
     }
 

@@ -1,12 +1,25 @@
 import "./App.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect , useContext } from "react";
 import { Link } from "react-router-dom";
 
 import Book from "./components/book";
 import BookShelf from "./components/book-shelf";
-import {  getAll } from "./BooksAPI";
+import { getAll } from "./BooksAPI";
+//import {shelfContext} from "./index"
 
-const App = () => {
+const App = (props) => {
+
+  //const shelfs = useContext(shelfContext)
+
+
+
+  const update = (input) =>{
+    setChange(input)
+    //props.shelf(input);
+  }
+
+
+  const [change ,setChange] =useState({})
   //const [showSearchPage, setShowSearchpage] = useState(false);
   const [currentlyReadingBooks, setCurrentlyReadingBooks] = useState([]);
   const [readBooks, setReadBooks] = useState([]);
@@ -15,24 +28,24 @@ const App = () => {
     (async () => {
       //---fetching all the books
       const books = await getAll();
+      books.forEach(b=>console.log(b.shelf))
       //-- setting the currently reading books
       let currentlyReadingBooks_ = books.filter(
         (b) => b.shelf === `currentlyReading`
       );
-      setCurrentlyReadingBooks(currentlyReadingBooks_); 
+      setCurrentlyReadingBooks(currentlyReadingBooks_);
       //-- setting the read books
-          let readBooks_ = books.filter(
-        (b) => b.shelf === `read`
-      );
+      let readBooks_ = books.filter((b) => b.shelf === `read`);
       setReadBooks(readBooks_);
       //--setting the wants to read book shelf
-      let wantsToReadBooks_ = books.filter(
-        (b) => b.shelf === `wantToRead`
-      );
-      setWantsToReadBooks(wantsToReadBooks_);
+      let wantsToReadBooks_ = books.filter((b) => b.shelf === `wantToRead`);
+      setWantsToReadBooks(wantsToReadBooks_) ;
 
-    })();
-  });
+      console.log(`|======= data fetched =======|`) ;
+    }
+    )();
+    
+  },[change]);
 
   return (
     <div className="app">
@@ -48,39 +61,38 @@ const App = () => {
                   <Book
                     key={book.id}
                     id={book.id}
-                    imageUrl={book.imageLinks?book.imageLinks.smallThumbnail:``}
+                    imageUrl={book.imageLinks.smallThumbnail}
                     title={book.title}
-                    auth={book.authors?book.authors:``}
+                    auth={book.authors}
+                    update={update}
                     option="currentlyReading"
                   />
                 );
               })}
             </BookShelf>
             <BookShelf shelfTitle="read">
-            {readBooks.map((book) => {
+              {readBooks.map((book) => {
                 return (
                   <Book
                     key={book.id}
-                    imageUrl={book.imageLinks?book.imageLinks.smallThumbnail:``}
+                    imageUrl={book.imageLinks.smallThumbnail}
                     title={book.title}
-                    auth={book.authors?book.authors:``}
+                    auth={book.authors}
                     option="read"
                     id={book.id}
-
                   ></Book>
                 );
               })}
             </BookShelf>
             <BookShelf shelfTitle="want to read">
-            {wantsToReadBooks.map((book) => {
+              {wantsToReadBooks.map((book) => {
                 return (
                   <Book
-                                  id={book.id}
-
+                    id={book.id}
                     key={book.id}
-                    imageUrl={book.imageLinks?book.imageLinks.smallThumbnail:``}
+                    imageUrl={book.imageLinks.smallThumbnail}
                     title={book.title}
-                    auth={book.authors?book.authors:``}
+                    auth={book.authors}
                     option="wantToRead"
                   ></Book>
                 );
