@@ -46,7 +46,7 @@ const Search = () => {
                 id={book.id}
                 imageUrl={book.imageLinks?book.imageLinks.smallThumbnail:``}
                 title={book.title}
-                auth={book.authors}
+                auth={book.authors?book.authors:``}
                option={book.shelf}
               />
             );
