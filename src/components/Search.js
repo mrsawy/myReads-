@@ -8,7 +8,7 @@ const Search = () => {
   const [books, setBooks] = useState([]);
 
   useEffect(() => {
-    search(searchInputState).then((results) => {
+    search(searchInputState,50).then((results) => {
       (results && setBooks(results));
     });
     return () => {
@@ -20,6 +20,7 @@ const Search = () => {
     setSearchInputState(e.target.value);
   };
 
+  console.log(books) 
   //--------------
   return (
     <div className="search-books">
@@ -38,12 +39,12 @@ const Search = () => {
       </div>
       <div className="search-books-results">
         <ol className="books-grid">
-          {books.map((book) => {
+          { books.length>0 && books.map((book) => {
             return (
               <Book
                 key={book.id}
                 id={book.id}
-                imageUrl={book.imageLinks.smallThumbnail}
+                imageUrl={book.imageLinks?book.imageLinks.smallThumbnail:``}
                 title={book.title}
                 auth={book.authors}
                option={book.shelf}
