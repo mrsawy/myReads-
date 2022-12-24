@@ -1,13 +1,10 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { update, search } from "../BooksAPI";
 import Book from "./book";
-import { shelfContext } from "../index";
-
-let finalRes;
+//-----------
 const Search = () => {
-  //     const shelfContext = useContext(shelfContext)
-  //     console.log(shelfContext);
+  //----------------
   const [searchInputState, setSearchInputState] = useState(``);
   const [books, setBooks] = useState([]);
   const [shelfs, setShelfs] = useState({});
@@ -15,10 +12,10 @@ const Search = () => {
   useEffect(() => {
     const ser = setTimeout(() => {
       update(`11`, `11`).then((shelfs) => {
-
         setShelfs(shelfs);
-console.log(        shelfs.currentlyReading
-)        //console.log(finalSh);
+        console.log(shelfs.currentlyReading);
+
+        //-------------------
       });
       search(searchInputState, 30).then((results) => {
         results && setBooks(results);
@@ -65,21 +62,13 @@ console.log(        shelfs.currentlyReading
                   title={book.title}
                   auth={book.authors ? book.authors : ``}
                   option={
-                    //['nggnmAEACAAJ', 'sJf1vQAACAAJ', '1w4fAwAAQBAJ', '1wy49i-gQjIC'].includes(book.id)
                     shelfs.currentlyReading.includes(book.id)
                       ? "currentlyReading"
                       : shelfs.wantToRead.includes(book.id)
-                       ? "wantToRead"
-                       : shelfs.read.includes(book.id)
-                        ? `read`
-                        :`none`
-
-                    //    shelfs.wantsToRead.includes(book.id) ?
-                    //     `wantToRead`
-                    //    :`none`
-                    //shelfs.wantsToRead.includes(book.id)
-                    //    ? "wantToRead"
-                    //   : "none"
+                      ? "wantToRead"
+                      : shelfs.read.includes(book.id)
+                      ? `read`
+                      : `none`
                   }
                   update={(input) => {}}
                 />

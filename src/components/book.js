@@ -1,6 +1,6 @@
 import React from "react";
 import BookshelfManager from "./book-shelf-manager";
-import { update, search } from "../BooksAPI";
+import { update } from "../BooksAPI";
 
 const Book = (props) => {
   const updater = (value) => {

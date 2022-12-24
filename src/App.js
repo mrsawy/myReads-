@@ -1,26 +1,19 @@
 import "./App.css";
-import { useState, useEffect , useContext } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import Book from "./components/book";
 import BookShelf from "./components/book-shelf";
 import { getAll } from "./BooksAPI";
-//import {shelfContext} from "./index"
 
-const App = (props) => {
-
-  //const shelfs = useContext(shelfContext)
-
-
-
-  const update = (input) =>{
-    setChange(input)
-    //props.shelf(input);
-  }
-
-
-  const [change ,setChange] =useState({})
-  //const [showSearchPage, setShowSearchpage] = useState(false);
+const App = () => {
+  //----------
+  const update = (input) => {
+    setChange(input);
+  };
+  //-------------
+  const [change, setChange] = useState({});
+  //-----------
   const [currentlyReadingBooks, setCurrentlyReadingBooks] = useState([]);
   const [readBooks, setReadBooks] = useState([]);
   const [wantsToReadBooks, setWantsToReadBooks] = useState([]);
@@ -28,7 +21,7 @@ const App = (props) => {
     (async () => {
       //---fetching all the books
       const books = await getAll();
-      books.forEach(b=>console.log(b.shelf))
+      books.forEach((b) => console.log(b.shelf));
       //-- setting the currently reading books
       let currentlyReadingBooks_ = books.filter(
         (b) => b.shelf === `currentlyReading`
@@ -39,13 +32,11 @@ const App = (props) => {
       setReadBooks(readBooks_);
       //--setting the wants to read book shelf
       let wantsToReadBooks_ = books.filter((b) => b.shelf === `wantToRead`);
-      setWantsToReadBooks(wantsToReadBooks_) ;
+      setWantsToReadBooks(wantsToReadBooks_);
 
-      console.log(`|======= data fetched =======|`) ;
-    }
-    )();
-    
-  },[change]);
+      console.log(`|======= data fetched =======|`);
+    })();
+  }, [change]);
 
   return (
     <div className="app">
@@ -65,7 +56,7 @@ const App = (props) => {
                     title={book.title}
                     auth={book.authors}
                     update={update}
-                    option="currentlyReading"
+                    option={book.shelf}
                   />
                 );
               })}
@@ -78,7 +69,9 @@ const App = (props) => {
                     imageUrl={book.imageLinks.smallThumbnail}
                     title={book.title}
                     auth={book.authors}
-                    option="read"
+                    option={book.shelf}
+                    update={update}
+
                     id={book.id}
                   ></Book>
                 );
@@ -93,7 +86,9 @@ const App = (props) => {
                     imageUrl={book.imageLinks.smallThumbnail}
                     title={book.title}
                     auth={book.authors}
-                    option="wantToRead"
+                    option={book.shelf}
+                    update={update}
+
                   ></Book>
                 );
               })}
